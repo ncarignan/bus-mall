@@ -2,9 +2,17 @@
 
 As a Marketing researcher, I want to provide appealing images to convert users to customers
 
-As a market researcher, I want to
+As a market researcher, I want to analyze how popular each product is
 
-As a developer, I want to
+As a market researcher, I want to know which product was picked most and most often/occurring to see which will sell best
+
+as a market researcher, I want to keep the products chosen varied to ensure a well rounded set of results
+
+As a developer, I want to store the data in the local machine so I can accumulate multiple tests worth of data.
+
+As a developer I want to Display the results in an interactive graphic so both the contractor and user can interpret the data for themselves.
+
+As a developer I want to sort the results from most picked to least so the reader can quickly interpret the data.
 
 As a focus group participant I want a simple and intuitive ui so I understand what I am doing.
 
