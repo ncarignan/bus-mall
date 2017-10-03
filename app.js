@@ -21,10 +21,10 @@ var imgEl1 = document.getElementById('productPic1');
 var imgEl2 = document.getElementById('productPic2');
 var imgEl3 = document.getElementById('productPic3');
 
-imgEl1.addEventListener('click', function(){randomProduct();productChoiceLogger(1);});
-imgEl2.addEventListener('click', function(){randomProduct();productChoiceLogger(2);});
-imgEl3.addEventListener('click', function(){randomProduct();productChoiceLogger(3);});
+var titles = [];
+var picked = [];
 
+// imgEl1.addEventListener('click', function(){randomProduct();productChoiceLogger(1);});
 
 //new instances
 
@@ -57,15 +57,15 @@ function randomProduct(){
     var randomIndex = Math.floor(Math.random() * Product.allProducts.length);
     if (Product.lastPicked.includes(randomIndex) || Product.productPickHistory[Product.productPickHistory.length - 1].includes(randomIndex) ){
       i--;
-      // console.log('already picked ' + randomIndex);
+      console.log('already picked ' + randomIndex);
     }else{
       Product.lastPicked.push(randomIndex);
-      // console.log('a picture gets ' + Product.lastPicked);
-      // console.log(i);
+      console.log('a picture gets ' + Product.lastPicked);
+      console.log(i);
       if (i === 0){
         imgEl1.src = Product.allProducts[randomIndex].filepath;
         Product.allProducts[randomIndex].count++;
-        // console.log(Product.allProducts[randomIndex].count);
+        console.log(Product.allProducts[randomIndex].count);
       }else if(i === 1){
         imgEl2.src = Product.allProducts[randomIndex].filepath;
         Product.allProducts[randomIndex].count++;
@@ -88,36 +88,71 @@ function productChoiceLogger(imgElNumber){
   }else if (imgElNumber === 3){
     Product.allProducts[ Product.lastPicked[2] ].picked++;
   }
-  if (Product.productPickHistory.length > 5){
-    imgEl1.removeEventListener('click', function(){randomProduct();productChoiceLogger(1);});
-    imgEl2.removeEventListener('click', function(){randomProduct();productChoiceLogger(2);});
-    imgEl3.removeEventListener('click', function(){randomProduct();productChoiceLogger(3);});
+  if (Product.productPickHistory.length > 25){
+    imgEl1.removeEventListener('click', handleClick1);
+    imgEl2.removeEventListener('click', handleClick2);
+    imgEl3.removeEventListener('click', handleClick3);
 
-    var ulEl = document.getElementById('clickStats');
-    for(var i in Product.allProducts){
-      var liEl = document.createElement('li');
-      liEl.textContent = Product.allProducts[i].name + ' was displayed ' + Product.allProducts[i].count + ' times and was picked ' + Product.allProducts[i].picked + ' times';
-      ulEl.appendChild(liEl);
+    // var ulEl = document.getElementById('clickStats');
+    // for(var i in Product.allProducts){
+    //   var liEl = document.createElement('li');
+    //   liEl.textContent = Product.allProducts[i].name + ' was displayed ' + Product.allProducts[i].count + ' times and was picked ' + Product.allProducts[i].picked + ' times';
+    //   ulEl.appendChild(liEl);
 
-    }
+    // }
+    updateChartArrays();
+    drawChart();
   }
 }
 
 //votes[i] =Product.allProducts[i].votes
 
 //chart stuff
-// var myBarChart = new Chart(ctx, {
-//   type: 'bar',
-//   data: data,
-//   options: options
-// });
 
+function updateChartArrays(){
+  for(var i in Product.allProducts){
+    titles[i] = Product.allProducts[i].name;
+    picked[i] = Product.allProducts[i].picked;
+  }
+  console.log(titles, picked);
+}
 
+function drawChart(){
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
 
+    // The data for our dataset
+    data: {
+      labels: titles,
+      datasets: [{
+        label: 'Number of times Product was Picked',
+        backgroundColor: 'navy',
+        hoverBackgroundColor: 'gold',
+        data: picked,
+      }]
+    },
 
+    // Configuration options go here
+    options: {
+    }
+  });
+}
+imgEl1.addEventListener('click', handleClick1);
+imgEl2.addEventListener('click', handleClick2);
+imgEl3.addEventListener('click', handleClick3);
 
-//each image selected becomes the first image, if happens 3 times, new image
-//these are three unique images each time//
-//next 3 are also not the same as first 3
-//percentage of times clicked/shown
-//votes and views in Product object
+function handleClick1(){
+  randomProduct();
+  productChoiceLogger(1);
+}
+function handleClick2(){
+  randomProduct();
+  productChoiceLogger(2);
+}
+function handleClick3(){
+  randomProduct();
+  productChoiceLogger(3);
+}
+// handleClick();
