@@ -48,7 +48,7 @@ new Product('R2D2 Bag', 'img/water-can.jpg');
 new Product('Banana Slicer', 'img/wine-glass.jpg');
 //etc
 
-var productPickHistory = [[]];
+var productPickHistory = [[],[],[],[],[],[]];
 var lastPicked = [];
 
 function randomProduct(){
@@ -64,19 +64,19 @@ function randomProduct(){
     }else{
       lastPicked.push(randomIndex);
       console.log('a picture gets ' + lastPicked);
-
-      if (i = 1){
-        imgEl1.src = Product.allProducts[randomIndex].filepath;
-      }else if(i = 2){
-        imgEl2.src = Product.allProducts[randomIndex].filepath;
-      }else if(i = 3){
-        imgEl3.src = Product.allProducts[randomIndex].filepath;
-      }
+      imgEl1.src = Product.allProducts[randomIndex].filepath;
+    //   if (i = 0){
+    //   }else if(i = 1){
+    //     imgEl2.src = Product.allProducts[randomIndex].filepath;
+    //   }else if(i = 2){
+    //     imgEl3.src = Product.allProducts[randomIndex].filepath;
+    //   }
+    // }
     }
   }productPickHistory.push(lastPicked);
+  // productPickHistory=productPickHistory.slice(4:);
   console.log('prodpickhist' + productPickHistory);
 }
-
 //   var randomIndex = Math.floor(Math.random() * Product.allProducts.length);
 //   imgEl1.src = Product.allProducts[randomIndex].filepath;
 //   randomIndex = Math.floor(Math.random() * Product.allProducts.length);
@@ -85,6 +85,7 @@ function randomProduct(){
 //   imgEl3.src = Product.allProducts[randomIndex].filepath;
 //
 // }
+
 
 
 //each image selected becomes the first image, if happens 3 times, new image
