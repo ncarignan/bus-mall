@@ -103,6 +103,15 @@ function productChoiceLogger(imgElNumber){
   }
 }
 
+//votes[i] =Product.allProducts[i].votes
+
+//chart stuff
+// var myBarChart = new Chart(ctx, {
+//   type: 'bar',
+//   data: data,
+//   options: options
+// });
+
 
 
 
