@@ -1,5 +1,5 @@
 'use strict';
-
+//changes were made
 //object
 function Product(name, filepath){
   this.name = name;
