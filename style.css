@@ -7,3 +7,6 @@
 p{
   font-size: 400%;
 }
+#chartHolder{
+  max-width:900px;
+}

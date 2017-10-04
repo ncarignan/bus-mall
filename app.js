@@ -1,16 +1,67 @@
 'use strict';
 //changes were made
 //object
+var allProducts = [];
+var productPickHistory = [[]];
+var lastPicked = [];
+var currentProductPickHistory = [[]];
+
+// localStorage.clear();
+function localStorageAlign1(){
+  if(!localStorage.allProducts){
+    localStorage.setItem('allProducts', JSON.stringify(allProducts));
+    console.log('created local' + localStorage.allProducts);
+  }else{
+    allProducts = JSON.parse(localStorage.getItem('allProducts'));
+    console.log('pulled from local' + allProducts);
+  }
+}
+localStorageAlign1();
+
+function localStorageAlign2(){
+  if(!localStorage.productPickHistory){
+    localStorage.setItem('productPickHistory', JSON.stringify(productPickHistory));
+    console.log('created local' + localStorage.productPickHistory);
+  }else{
+    productPickHistory = JSON.parse(localStorage.getItem('productPickHistory'));
+    console.log('pulled from local' + productPickHistory);
+  }
+}
+localStorageAlign2();
+
+
+
+
+//
+// function localStorageAlign2(variableID){
+//   if(!localStorage.variableID){
+//     console.log(variableID);
+//     localStorage.setItem('variableID', variableID);
+//     localStorage.variableID = variableID;
+//   }
+// else{
+//   variableID = localStorage.variableID;
+// }
+// }
+// localStorageAlign2(allProducts);
+// console.log(allProducts);
+// localStorageAlign2(productPickHistory);
+// console.log(productPickHistory);
+// localStorageAlign2(testerVariable);
+// console.log(testerVariable);
+// console.log(localStorage.testerVariable);
+
+// var
+// localStorageAlign2(lastPicked);
+
+
 function Product(name, filepath){
   this.name = name;
   this.filepath = filepath;
   this.count = 0;
   this.picked = 0;
-  Product.allProducts.push(this);
+  allProducts.push(this);
 }
-Product.allProducts = [];
-Product.productPickHistory = [[]];
-Product.lastPicked = [];
 
 //rand display pictures
 
@@ -44,7 +95,7 @@ new Product('pizza scizzors', 'img/scissors.jpg');
 new Product('shark bag', 'img/shark.jpg');
 new Product('baby swiffer', 'img/sweep.png');
 new Product('tauntaun bag', 'img/tauntaun.jpg');
-new Product('tentacle meat', 'img/unicorn.jpg');
+new Product('unicorn meat', 'img/unicorn.jpg');
 new Product('naughty arm', 'img/usb.gif');
 new Product('water can', 'img/water-can.jpg');
 new Product('wine glass', 'img/wine-glass.jpg');
@@ -52,51 +103,55 @@ new Product('wine glass', 'img/wine-glass.jpg');
 
 
 function randomProduct(){
-  Product.lastPicked = [];
+  lastPicked = [];
   for(var i = 0; i < 3; i++){
-    var randomIndex = Math.floor(Math.random() * Product.allProducts.length);
-    if (Product.lastPicked.includes(randomIndex) || Product.productPickHistory[Product.productPickHistory.length - 1].includes(randomIndex) ){
+    var randomIndex = Math.floor(Math.random() * allProducts.length);
+    if (lastPicked.includes(randomIndex) || currentProductPickHistory[currentProductPickHistory.length - 1].includes(randomIndex) ){
       i--;
       console.log('already picked ' + randomIndex);
     }else{
-      Product.lastPicked.push(randomIndex);
-      console.log('a picture gets ' + Product.lastPicked);
+      lastPicked.push(randomIndex);
+      console.log('a picture gets ' + lastPicked);
       console.log(i);
       if (i === 0){
-        imgEl1.src = Product.allProducts[randomIndex].filepath;
-        Product.allProducts[randomIndex].count++;
-        console.log(Product.allProducts[randomIndex].count);
+        imgEl1.src = allProducts[randomIndex].filepath;
+        allProducts[randomIndex].count++;
+        console.log(allProducts[randomIndex].count);
       }else if(i === 1){
-        imgEl2.src = Product.allProducts[randomIndex].filepath;
-        Product.allProducts[randomIndex].count++;
+        imgEl2.src = allProducts[randomIndex].filepath;
+        allProducts[randomIndex].count++;
       }else if(i === 2){
-        imgEl3.src = Product.allProducts[randomIndex].filepath;
-        Product.allProducts[randomIndex].count++;
+        imgEl3.src = allProducts[randomIndex].filepath;
+        allProducts[randomIndex].count++;
       }
     }
 
-  }Product.productPickHistory.push(Product.lastPicked);
-  // Product.productPickHistory=Product.productPickHistory.slice(4:);
-  // console.log('prodpickhist' + Product.productPickHistory);
+  }currentProductPickHistory.push(lastPicked);
+  // productPickHistory=productPickHistory.slice(4:);
+  // console.log('prodpickhist' + productPickHistory);
 }
+randomProduct();
 
 function productChoiceLogger(imgElNumber){
   if (imgElNumber == 1){
-    Product.allProducts[(Product.lastPicked[0])].picked++;
+    allProducts[(lastPicked[0])].picked++;
   }else if (imgElNumber === 2) {
-    Product.allProducts[Product.lastPicked[1]].picked++;
+    allProducts[lastPicked[1]].picked++;
   }else if (imgElNumber === 3){
-    Product.allProducts[ Product.lastPicked[2] ].picked++;
+    allProducts[ lastPicked[2] ].picked++;
   }
-  if (Product.productPickHistory.length > 25){
+  if (currentProductPickHistory.length > 26){
     imgEl1.removeEventListener('click', handleClick1);
     imgEl2.removeEventListener('click', handleClick2);
     imgEl3.removeEventListener('click', handleClick3);
 
+    productPickHistory = productPickHistory.concat(currentProductPickHistory);
+    localStorage.allProducts = JSON.stringify(allProducts);
+    localStorage.productPickHistory = JSON.stringify(productPickHistory);
     // var ulEl = document.getElementById('clickStats');
-    // for(var i in Product.allProducts){
+    // for(var i in allProducts){
     //   var liEl = document.createElement('li');
-    //   liEl.textContent = Product.allProducts[i].name + ' was displayed ' + Product.allProducts[i].count + ' times and was picked ' + Product.allProducts[i].picked + ' times';
+    //   liEl.textContent = allProducts[i].name + ' was displayed ' + allProducts[i].count + ' times and was picked ' + allProducts[i].picked + ' times';
     //   ulEl.appendChild(liEl);
 
     // }
@@ -105,14 +160,14 @@ function productChoiceLogger(imgElNumber){
   }
 }
 
-//votes[i] =Product.allProducts[i].votes
+//votes[i] =allProducts[i].votes
 
 //chart stuff
 
 function updateChartArrays(){
-  for(var i in Product.allProducts){
-    titles[i] = Product.allProducts[i].name;
-    picked[i] = Product.allProducts[i].picked;
+  for(var i in allProducts){
+    titles[i] = allProducts[i].name;
+    picked[i] = allProducts[i].picked;
   }
   console.log(titles, picked);
 }
@@ -136,9 +191,15 @@ function drawChart(){
 
     // Configuration options go here
     options: {
+      maintainAspectRatio: true,
     }
   });
 }
+
+
+
+
+//onclick adds an event handler function that  pulls the event click in the chart
 imgEl1.addEventListener('click', handleClick1);
 imgEl2.addEventListener('click', handleClick2);
 imgEl3.addEventListener('click', handleClick3);
