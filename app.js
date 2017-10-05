@@ -9,11 +9,12 @@ var currentProductPickHistory = [[]];
 // localStorage.clear();
 function localStorageAlign1(){
   if(!localStorage.allProducts){
+    newInstances();
     localStorage.setItem('allProducts', JSON.stringify(allProducts));
-    console.log('created local' + localStorage.allProducts);
+    // console.log('created local' + localStorage.allProducts);
   }else{
     allProducts = JSON.parse(localStorage.getItem('allProducts'));
-    console.log('pulled from local' + allProducts);
+    // console.log('pulled from local' + allProducts);
   }
 }
 localStorageAlign1();
@@ -21,10 +22,10 @@ localStorageAlign1();
 function localStorageAlign2(){
   if(!localStorage.productPickHistory){
     localStorage.setItem('productPickHistory', JSON.stringify(productPickHistory));
-    console.log('created local' + localStorage.productPickHistory);
+    // console.log('created local' + localStorage.productPickHistory);
   }else{
     productPickHistory = JSON.parse(localStorage.getItem('productPickHistory'));
-    console.log('pulled from local' + productPickHistory);
+    // console.log('pulled from local' + productPickHistory);
   }
 }
 localStorageAlign2();
@@ -78,27 +79,28 @@ var picked = [];
 // imgEl1.addEventListener('click', function(){randomProduct();productChoiceLogger(1);});
 
 //new instances
-
-new Product('R2D2 Bag', 'img/bag.jpg');
-new Product('Banana Slicer', 'img/banana.jpg');
-new Product('Toilet Paper Ipad', 'img/bathroom.jpg');
-new Product('Toeless Boots', 'img/boots.jpg');
-new Product('Coffee Toaster', 'img/breakfast.jpg');
-new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
-new Product('butt bumper', 'img/chair.jpg');
-new Product('cthulhu', 'img/cthulhu.jpg');
-new Product('dog duck', 'img/dog-duck.jpg');
-new Product('dragon meat', 'img/dragon.jpg');
-new Product('pentencile', 'img/pen.jpg');
-new Product('pet swiffer', 'img/pet-sweep.jpg');
-new Product('pizza scizzors', 'img/scissors.jpg');
-new Product('shark bag', 'img/shark.jpg');
-new Product('baby swiffer', 'img/sweep.png');
-new Product('tauntaun bag', 'img/tauntaun.jpg');
-new Product('unicorn meat', 'img/unicorn.jpg');
-new Product('naughty arm', 'img/usb.gif');
-new Product('water can', 'img/water-can.jpg');
-new Product('wine glass', 'img/wine-glass.jpg');
+function newInstances(){
+  new Product('R2D2 Bag', 'img/bag.jpg');
+  new Product('Banana Slicer', 'img/banana.jpg');
+  new Product('Toilet Paper Ipad', 'img/bathroom.jpg');
+  new Product('Toeless Boots', 'img/boots.jpg');
+  new Product('Coffee Toaster', 'img/breakfast.jpg');
+  new Product('Meatball Bubblegum', 'img/bubblegum.jpg');
+  new Product('butt bumper', 'img/chair.jpg');
+  new Product('cthulhu', 'img/cthulhu.jpg');
+  new Product('dog duck', 'img/dog-duck.jpg');
+  new Product('dragon meat', 'img/dragon.jpg');
+  new Product('pentencile', 'img/pen.jpg');
+  new Product('pet swiffer', 'img/pet-sweep.jpg');
+  new Product('pizza scizzors', 'img/scissors.jpg');
+  new Product('shark bag', 'img/shark.jpg');
+  new Product('baby swiffer', 'img/sweep.png');
+  new Product('tauntaun bag', 'img/tauntaun.jpg');
+  new Product('unicorn meat', 'img/unicorn.jpg');
+  new Product('naughty arm', 'img/usb.gif');
+  new Product('water can', 'img/water-can.jpg');
+  new Product('wine glass', 'img/wine-glass.jpg');
+}
 //etc
 
 
@@ -106,6 +108,7 @@ function randomProduct(){
   lastPicked = [];
   for(var i = 0; i < 3; i++){
     var randomIndex = Math.floor(Math.random() * allProducts.length);
+    // console.log('pickhistory length is ' + currentProductPickHistory.length);
     if (lastPicked.includes(randomIndex) || currentProductPickHistory[currentProductPickHistory.length - 1].includes(randomIndex) ){
       i--;
       console.log('already picked ' + randomIndex);
@@ -183,7 +186,7 @@ function drawChart(){
       labels: titles,
       datasets: [{
         label: 'Number of times Product was Picked',
-        backgroundColor: 'navy',
+        backgroundColor: 'red',
         hoverBackgroundColor: 'gold',
         data: picked,
       }]
@@ -192,6 +195,12 @@ function drawChart(){
     // Configuration options go here
     options: {
       maintainAspectRatio: true,
+      color:'black',
+      legend: {
+        labels: {
+          fontColor:'black',
+        }
+      }
     }
   });
 }

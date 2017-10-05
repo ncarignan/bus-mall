@@ -1,12 +1,44 @@
+html{
+  background-color: #008f95;
+}
+article{
+  width:1065px;
+  height:470px;
+  margin:0 auto 30px auto;
+  border:#eb6e80 solid 15px;
+  background-color:#e9b000;
+}
   img{
-    display:inline-block;
-    width:200px;
-    margin:30px;
+    /*display:block;*/
+    max-height: 100%;
+    max-width: 100%;
+    margin:auto;
+    background-color: #e9b000;
   }
 
+h1{
+  font-size: 300%;
+  background-color: #e9b000;
+}
 p{
-  font-size: 400%;
+  font-size: 18px;
+  background-color: #e9b000;
 }
 #chartHolder{
   max-width:900px;
 }
+.images{
+  border:#e24e42 solid 15px;
+  height:300px;
+  width:300px;
+  float:left;
+  margin:65px 10px 65px 10px;
+  background-color: #e9b000;
+
+}
+
+/*color choices
+papaya #e24e42
+Mustard #e9b000
+Blush #eb6e80
+Aqua #008f95*/
