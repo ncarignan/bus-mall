@@ -19,14 +19,3 @@ As a focus group participant I want a simple and intuitive ui so I understand wh
 As A focus group participant, I want clear directions so I know what to do on the screen.
 
 As a focus group participant, I want to see what my favorite items were.
-
-
-
-
-on page load
-if(locaslstorage exissts){
-  do stuff to load datase
-}else{
-  make data
-  create instances
-}
