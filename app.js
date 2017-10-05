@@ -111,15 +111,15 @@ function randomProduct(){
     // console.log('pickhistory length is ' + currentProductPickHistory.length);
     if (lastPicked.includes(randomIndex) || currentProductPickHistory[currentProductPickHistory.length - 1].includes(randomIndex) ){
       i--;
-      console.log('already picked ' + randomIndex);
+      // console.log('already picked ' + randomIndex);
     }else{
       lastPicked.push(randomIndex);
-      console.log('a picture gets ' + lastPicked);
-      console.log(i);
+      // console.log('a picture gets ' + lastPicked);
+      // console.log(i);
       if (i === 0){
         imgEl1.src = allProducts[randomIndex].filepath;
         allProducts[randomIndex].count++;
-        console.log(allProducts[randomIndex].count);
+        // console.log(allProducts[randomIndex].count);
       }else if(i === 1){
         imgEl2.src = allProducts[randomIndex].filepath;
         allProducts[randomIndex].count++;
@@ -172,7 +172,7 @@ function updateChartArrays(){
     titles[i] = allProducts[i].name;
     picked[i] = allProducts[i].picked;
   }
-  console.log(titles, picked);
+  // console.log(titles, picked);
 }
 
 function drawChart(){
